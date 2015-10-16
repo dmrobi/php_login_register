@@ -21,7 +21,7 @@ if(empty($_POST) === false){
 		}else{
 			//set the user session
 			$_SESSION['user_id'] = $login;
-			$_SESSION['username'] = $username;
+            user_data($login);
 			//redirect user to home
 			header('Location: index.php');
 			exit();

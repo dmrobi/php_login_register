@@ -1,8 +1,8 @@
 <?php
-$db_host = "localhost"; 
-$db_user = "root";
-$db_pass = "";
-$db_name = "login_register";
+$db_host = "199.48.164.149"; 
+$db_user = "ferrywoa_dmrobi";
+$db_pass = "mamTech1989";
+$db_name = "ferrywoa_login_register";
 $conn = mysql_connect($db_host, $db_user, $db_pass, $db_name);
 
 if (!$conn) {

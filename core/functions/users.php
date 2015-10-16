@@ -1,10 +1,43 @@
 <?php
+    
+    function get_user_data($user_id){
+        $data = array();
+        $user_id = (int)$user_id;
+        
+        $func_num_args = func_num_args();
+        $func_get_args = func_get_args();
+        
+        if($func_num_args > 1){
+            unset($func_get_args[0]);
+            
+            $fields = '`' . implode('`, `', $func_get_args) . '`';
+            $sql = "SELECT $fields FROM `users` WHERE `user_id` = $user_id";
+            $data = mysql_fetch_assoc(mysql_query($sql));
+            
+            return $data;
+        }
+        
+    }
+
+    function user_data($user_id){
+		$data = array();
+        $user_id = (int)$user_id;
+        
+		$sql = "SELECT * FROM users WHERE user_id = '$user_id'";
+
+		$result = mysql_query($sql);
+		$data = mysql_fetch_assoc($result);
+        
+        return $data;
+        
+		mysql_free_result($result);
+	}
 	
 	function loged_in(){
 		return (isset($_SESSION['user_id'])) ? true : false;
 	}
 
-	function user_exists($username){
+    function user_exists($username){
 		$username = sanitize($username);
 		$sql = "SELECT user_id FROM users WHERE username = '$username'";
 
