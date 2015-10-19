@@ -1,5 +1,29 @@
 <?php
     
+    function register_user($register_data){
+        array_walk($register_data, 'array_sanitize');
+        $register_data['password'] = md5($register_data['password']);
+        $register_data['username'] = strtolower($register_data['username']);
+        //print_r($register_data);
+        
+        $fields = '`'.implode('`, `', array_keys($register_data)).'`';
+        $data = '\''.implode('\', \'', $register_data).'\'';
+        
+        mysql_query("INSERT INTO users ($fields) VALUES ($data)");
+        
+        //echo $fields;
+    }
+
+    function user_count($user_type){
+        if($user_type == "all"){
+            return mysql_result(mysql_query("SELECT COUNT(user_id) FROM users"), 0);
+        }else if($user_type == "active"){
+            return mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE active = 1"), 0);
+        }else if($user_type == "inactive"){
+            return mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE active = 0"), 0);
+        }
+    }
+
     function get_user_data($user_id){
         $data = array();
         $user_id = (int)$user_id;
@@ -30,7 +54,7 @@
         
         return $data;
         
-		mysql_free_result($result);
+        mysql_free_result($result);
 	}
 	
 	function loged_in(){
@@ -45,6 +69,12 @@
 		$row = mysql_fetch_assoc($result);
 		return ($row)? true : false;
 
+		mysql_free_result($result);
+	}
+
+    function email_exists($email){
+        $email = sanitize($email);
+        return (mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE email = '$email'"), 0) == 1) ? true : false;
 		mysql_free_result($result);
 	}
 

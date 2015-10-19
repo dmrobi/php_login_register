@@ -1,9 +1,7 @@
 <?php
-include 'includes/overall/header.php';
 include 'core/init.php';
-?>
-<div class="col-sm-9">
-<?php
+
+
 if(empty($_POST) === false){
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -28,8 +26,15 @@ if(empty($_POST) === false){
 		}
 	}
 
-	echo $errors[0];
 }
+?>
+
+<?php include 'includes/overall/header.php'; ?>
+<div class="col-sm-9">
+<?php
+	if($errors){
+		echo output_err($errors);
+	}
 ?>
 </div><!--end blog-main -->
 <?php
