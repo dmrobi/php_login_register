@@ -1,5 +1,6 @@
-<?php 
+<?php
 include 'core/init.php';
+loged_in_redirect();
 include 'includes/overall/header.php';
 
 if(empty($_POST) === false){

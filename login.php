@@ -1,6 +1,6 @@
 <?php
 include 'core/init.php';
-
+loged_in_redirect();
 
 if(empty($_POST) === false){
 	$username = $_POST['username'];
@@ -17,12 +17,14 @@ if(empty($_POST) === false){
 		if($login === false){
 			$errors[] = '<div class="alert alert-danger">That username/password is incorrect</div>';
 		}else{
-			//set the user session
+			
+            //set the user session
 			$_SESSION['user_id'] = $login;
             user_data($login);
-			//redirect user to home
-			header('Location: index.php');
-			exit();
+			
+            //redirect user to home
+			loged_in_redirect();
+            
 		}
 	}
 
