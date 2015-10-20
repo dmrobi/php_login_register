@@ -1,8 +1,8 @@
 <?php
-$db_host = "199.48.164.149"; 
-$db_user = "ferrywoa_dmrobi";
-$db_pass = "mamTech1989";
-$db_name = "ferrywoa_login_register";
+$db_host = "logicpen.com"; 
+$db_user = "logicpen_databas";
+$db_pass = "logicpen_databas";
+$db_name = "logicpen_databas";
 $conn = mysql_connect($db_host, $db_user, $db_pass, $db_name);
 
 if (!$conn) {
