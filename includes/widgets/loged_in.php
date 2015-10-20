@@ -5,6 +5,7 @@
             <div class="col-md-6 text-right"><?php echo $user_data['first_name']; ?></div>
         </div>
         <hr>
-        <div class="text-center"><a href="logout.php">Logout</a></div>
+        <div class="text-center"><a href="logout.php"><button class="btn btn-default">Logout</button></a></div>
+        <div class="text-center"><a href="changepassword.php">Change Password</a></div>
     </div>
 </div>

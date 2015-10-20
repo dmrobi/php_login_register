@@ -16,6 +16,7 @@ include 'includes/overall/header.php';
             <!-- end Registration done message -->
             
 			<h1>Home</h1>
+			<hr>
 			<div>Just a template</div>
 
 			<?php
