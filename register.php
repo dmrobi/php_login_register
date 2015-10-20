@@ -50,19 +50,21 @@ if(empty($_POST) === false){
         
         //Form Submission
         if(empty($errors)){
+            $hash = md5(rand(0, 1000));
             $register_data = array(
                 'username'      => $_POST['username'],
                 'password'      => $_POST['password'],
                 'first_name'    => $_POST['first_name'],
                 'last_name'     => $_POST['last_name'],
                 'email'         => $_POST['email'],
+                'hash'         => $hash
                 
             );
             
             register_user($register_data);
-            
             //Redirect
             header('Location: index.php?success');
+            send_verification_email($_POST['email'], $hash);
             exit();
         }
         

@@ -20,6 +20,25 @@
         //echo $fields;
     }
 
+    function send_verification_email($email, $hash){
+        $subject = "Email Verification";
+        $message = ' 
+        Thanks for signing up!
+        Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+
+        ------------------------
+        Username: '.$_POST['username'].'
+        ------------------------
+
+        Please click this link to activate your account:
+        http://www.logicpen.com/verify.php?email='.$email.'&hash='.$hash.'
+
+        ';
+        $from = "From: LogicPen@logicpen.com";
+
+        mail($email, $subject, $message, $from);
+    }
+
     function user_count($user_type){
         if($user_type == "all"){
             return mysql_result(mysql_query("SELECT COUNT(user_id) FROM users"), 0);
