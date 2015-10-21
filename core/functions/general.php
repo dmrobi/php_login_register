@@ -1,5 +1,9 @@
 <?php
 
+function email_verification($to, $subject, $body){
+    mail($to, $subject, $body, 'From: Verification@logicpen.com');
+}
+
 function loged_in_redirect(){
     if(loged_in() === true){
         header("Location: index.php");

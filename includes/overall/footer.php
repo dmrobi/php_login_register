@@ -5,7 +5,8 @@
 <hr>
 <div class="text-center">Designed and Developed by LogicPen</div>
 <!-- Latest compiled and minified JavaScript -->
-<script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/custom.js"></script>
 </body>
 </html>

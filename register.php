@@ -1,7 +1,6 @@
 <?php
 include 'core/init.php';
 loged_in_redirect();
-include 'includes/overall/header.php';
 
 if(empty($_POST) === false){
     $required_fields = array('username','password','password_confirm','first_name','email');
@@ -50,7 +49,7 @@ if(empty($_POST) === false){
         
         //Form Submission
         if(empty($errors)){
-            $hash = md5(rand(0, 1000));
+            $hash = md5(rand(0, 1000) + microtime());
             $register_data = array(
                 'username'      => $_POST['username'],
                 'password'      => $_POST['password'],
@@ -64,13 +63,14 @@ if(empty($_POST) === false){
             register_user($register_data);
             //Redirect
             header('Location: index.php?success');
-            send_verification_email($_POST['email'], $hash);
+            //email($_POST['email'], $hash);
             exit();
         }
         
     }
 }
 
+include 'includes/overall/header.php';
 ?>
 
 		<div class="col-sm-9">
