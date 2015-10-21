@@ -6,6 +6,17 @@
         mysql_query("UPDATE users SET password = '$password' WHERE user_id = $user_id");
     }
     
+    function update_user_data($update_data, $user_id){
+        $update = array();
+        array_walk($update_data, 'array_sanitize');
+        
+        foreach($update_data as $fields=>$data){
+            $update[] = '`' .$fields. '`=\''.$data.'\'';
+        }
+        //$user_data = implode(', ', $update);
+        mysql_query("UPDATE `users` SET " . implode(', ', $update) ." WHERE `user_id` = $user_id") or die(mysql_error());
+    }
+
     function register_user($register_data){
         array_walk($register_data, 'array_sanitize');
         $register_data['password'] = md5($register_data['password']);

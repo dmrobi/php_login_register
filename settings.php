@@ -2,9 +2,9 @@
 include 'core/init.php';
 protect_page();
 
-// Change Password form Validation and Submit....
-if(empty($_POST) === false){
-    $required_fields = array('current_password','password','password_confirm');
+//code to validate and update settings....
+if(!empty($_POST)){
+    $required_fields = array('first_name', 'email');
     
     foreach($_POST as $key=>$value){
         if(empty($value) && in_array($key, $required_fields) === true){
@@ -13,34 +13,29 @@ if(empty($_POST) === false){
         }
     }
     
-    if(empty($errors) === true){
+    if(empty($errros)){
         
-        //Check current password
-        if(md5($_POST['current_password']) !== $user_data['password']){
-            $errors[] = '<div class="alert alert-danger">Your current password is incorrect.</div>';
-        }else{
-            
-            //New Passwod Validation
-            if(strlen($_POST['password']) < 6){
-                $errors[] = '<div class="alert alert-danger">Password must be at least 6 Charecters.</div>';
-            }else{
-                if($_POST['password'] !== $_POST['password_confirm']){
-                    $errors[] = '<div class="alert alert-danger">Password does not match.</div>';
-                }
-            }
-            
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors[] = '<div class="alert alert-danger">Invalid email, please insert your correct email address.</div>';
+        }else if(email_exists($_POST['email']) && $_POST['email'] !== $user_data['email']){
+            $errors[] = '<div class="alert alert-danger">The email you entered \''.$_POST['email'].'\' is already in use.</div>';
         }
         
-        //Form Submission
-        if(empty($errors)){
-            change_password($_POST['password'], $session_user_id);
+        if(empty($errros)){
+            $update_data = array(
+                'first_name'    => $_POST['first_name'],
+                'last_name'     => $_POST['last_name'],
+                'email'         => $_POST['email']
+            );
+            
+            update_user_data($update_data, $session_user_id);
             //Redirect
-            header('Location: changepassword.php?success');
+            header('Location: settings.php?success');
+            //email($_POST['email'], $hash);
             exit();
         }
-        
     }
-}//end change password form validation and submit
+}
 
 include 'includes/overall/header.php';
 ?>
@@ -65,9 +60,9 @@ include 'includes/overall/header.php';
 
                         <div class="control-group">
                             <!-- Frist Name -->
-                            <label class="control-label" for="first_name">First Name</label>
+                            <label class="control-label" for="first_name">First Name*</label>
                             <div class="controls">
-                                <input type="text" id="first_name" name="first_name" placeholder="Robiul Islam" class="input-xlarge form-control">
+                                <input type="text" id="first_name" name="first_name" value="<?php echo $user_data['first_name'] ?>" class="input-xlarge form-control">
                             </div>
                         </div>
                         
@@ -75,7 +70,7 @@ include 'includes/overall/header.php';
                             <!-- Last Name -->
                             <label class="control-label" for="last_name">Last Name</label>
                             <div class="controls">
-                                <input type="text" id="last_name" name="last_name" placeholder="Robi" class="input-xlarge form-control">
+                                <input type="text" id="last_name" name="last_name" value="<?php echo $user_data['last_name'] ?>" class="input-xlarge form-control">
                             </div>
                         </div>
                         
@@ -83,11 +78,10 @@ include 'includes/overall/header.php';
                             <!-- Last Name -->
                             <label class="control-label" for="email">Email*</label>
                             <div class="controls">
-                                <input type="email" id="email" name="email" placeholder="dmrobi89@gmail.com" class="input-xlarge form-control">
-                                <p class="help-block">If you change current email then your account will be Deactivated and you will need to Verify your new Email and Activate account again.</p>
+                                <input type="email" id="email" name="email" value="<?php echo $user_data['email'] ?>" class="input-xlarge form-control">
                             </div>
                         </div>
-                        
+                        <hr>
                         <div class="control-group">
                             <!-- Button -->
                             <div class="controls">
