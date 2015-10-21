@@ -6,6 +6,6 @@
         </div>
         <hr>
         <div class="text-center"><a href="logout.php"><button class="btn btn-default">Logout</button></a></div>
-        <div class="text-center"><a href="changepassword.php">Change Password</a></div>
+        <div class="text-center"><a href="changepassword.php">Change Password</a> | <a href="settings.php">Account Settings</a></div>
     </div>
 </div>
